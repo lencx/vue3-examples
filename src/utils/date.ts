@@ -8,20 +8,14 @@
  * @param year
  * @param month
  */
-export const getMonthDays = (year: number, month: number) => {
-  const start = new Date(year, month - 1, 1).getTime();
-  const end = new Date(year, month, 1).getTime();
-  return (end - start) / (1000 * 60 * 60 * 24);
-}
+export const getMonthDays = (year: number, month: number) => new Date(year, month, 0).getDate();
 
 /**
  * getMonthFirst
  * @param year
  * @param month
  */
-export const getMonthFirst = (year: number, month: number) => {
-  return new Date(year, month - 1, 1).getDay();
-}
+export const getMonthFirst = (year: number, month: number) => new Date(year, month - 1, 1).getDay();
 
 /**
  * getDays
@@ -31,7 +25,7 @@ export const getMonthFirst = (year: number, month: number) => {
 export const getDays = (year: number, month: number) => {
   const a = getMonthFirst(year, month);
   const b = getMonthDays(year, month);
-  return [...new Array(a).fill(''), ...new Array(b).fill(0).map((_, idx) => idx + 1)];
+  return Array.from({length: a + b }, (_, i) => i >= a ? (i + 1 - a) : '');
 }
 
 export const getCurrentTime = () => {
