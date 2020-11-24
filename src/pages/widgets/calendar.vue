@@ -75,7 +75,6 @@ function getPrev(type: BtnType = 'M') {
     }
   }
   setNow()
-  state.days = getDays(state.nYear, state.nMonth)
 }
 
 function getNext(type: BtnType = 'M') {
@@ -90,7 +89,6 @@ function getNext(type: BtnType = 'M') {
     }
   }
   setNow()
-  state.days = getDays(state.nYear, state.nMonth)
 }
 
 function getNow() {
@@ -106,6 +104,7 @@ function setNow() {
   } else {
     state.isNow = false
   }
+  state.days = getDays(state.nYear, state.nMonth)
 }
 
 export { sWeek, now, state }
