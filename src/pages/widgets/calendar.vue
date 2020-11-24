@@ -29,7 +29,7 @@
           `week_${index%7}`,
         ]"
         v-for="(item, index) in state.days"
-        v-html="item"
+        v-html="item === -1 ? '' : item"
         :key="index"
       />
     </div>
@@ -43,7 +43,7 @@ import { getDays, getCurrentTime } from '/~/utils/date'
 type BtnType = 'Y' | 'M'
 interface IState {
   isNow: boolean;
-  days: string[];
+  days: number[];
   nYear: number;
   nMonth: number;
 }

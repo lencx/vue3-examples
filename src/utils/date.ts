@@ -25,7 +25,7 @@ export const getMonthFirst = (year: number, month: number) => new Date(year, mon
 export const getDays = (year: number, month: number) => {
   const a = getMonthFirst(year, month);
   const b = getMonthDays(year, month);
-  return Array.from({length: a + b }, (_, i) => i >= a ? (i + 1 - a) : '');
+  return Array.from({length: a + b }, (_, i) => i >= a ? (i + 1 - a) : -1);
 }
 
 export const getCurrentTime = () => {
