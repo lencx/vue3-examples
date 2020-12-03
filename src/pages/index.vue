@@ -4,10 +4,16 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { useRouter } from 'vue-router'
-const router = useRouter()
-export const go = () => {
-  router.push(`/widgets/calendar`)
+
+export default {
+  setup() {
+    const router = useRouter()
+    const go = () => {
+      router.push(`/widgets/calendar`)
+    }
+    return { go }
+  }
 }
 </script>

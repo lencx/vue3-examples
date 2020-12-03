@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { reactive } from 'vue'
 import { getDays, getCurrentTime } from '/~/utils/date'
 
@@ -50,65 +50,74 @@ interface IState {
 
 const sWeek = '🅂 🄼 🅃 🅆 🅃 🄵 🅂'.split(' ')
 
-const state = reactive<IState>({
-  isNow: true,
-  days: [],
-  nYear: 0,
-  nMonth: 0,
-})
+export default {
+  setup() {
+    const state = reactive<IState>({
+      isNow: true,
+      days: [],
+      nYear: 0,
+      nMonth: 0,
+    })
 
-// init
-const now = getCurrentTime()
-state.days = getDays(now.year, now.month)
-state.nYear = now.year
-state.nMonth = now.month
+    // init
+    const now = getCurrentTime()
+    state.days = getDays(now.year, now.month)
+    state.nYear = now.year
+    state.nMonth = now.month
 
-function getPrev(type: BtnType = 'M') {
-  if (type === 'Y') {
-    state.nYear = state.nYear - 1
-  } else {
-    if (state.nMonth <= 1) {
-      state.nYear = state.nYear - 1
-      state.nMonth = 12
-    } else {
-      state.nMonth = state.nMonth - 1
+    function getPrev(type: BtnType = 'M') {
+      if (type === 'Y') {
+        state.nYear = state.nYear - 1
+      } else {
+        if (state.nMonth <= 1) {
+          state.nYear = state.nYear - 1
+          state.nMonth = 12
+        } else {
+          state.nMonth = state.nMonth - 1
+        }
+      }
+      setNow()
+    }
+
+    function getNext(type: BtnType = 'M') {
+      if (type === 'Y') {
+        state.nYear = state.nYear + 1
+      } else {
+        if (state.nMonth >= 12) {
+          state.nYear = state.nYear + 1
+          state.nMonth = 1
+        } else {
+          state.nMonth = state.nMonth + 1
+        }
+      }
+      setNow()
+    }
+
+    function getNow() {
+      state.nYear = now.year
+      state.nMonth = now.month
+      state.days = getDays(now.year, now.month)
+      state.isNow = true
+    }
+
+    function setNow() {
+      if (state.nYear === now.year && state.nMonth === now.month) {
+        state.isNow = true
+      } else {
+        state.isNow = false
+      }
+      state.days = getDays(state.nYear, state.nMonth)
+    }
+
+    // export { sWeek, now, state }
+    // export { getPrev, getNext, getNow }
+    return {
+      sWeek, now, state,
+      getPrev, getNext, getNow
     }
   }
-  setNow()
 }
 
-function getNext(type: BtnType = 'M') {
-  if (type === 'Y') {
-    state.nYear = state.nYear + 1
-  } else {
-    if (state.nMonth >= 12) {
-      state.nYear = state.nYear + 1
-      state.nMonth = 1
-    } else {
-      state.nMonth = state.nMonth + 1
-    }
-  }
-  setNow()
-}
-
-function getNow() {
-  state.nYear = now.year
-  state.nMonth = now.month
-  state.days = getDays(now.year, now.month)
-  state.isNow = true
-}
-
-function setNow() {
-  if (state.nYear === now.year && state.nMonth === now.month) {
-    state.isNow = true
-  } else {
-    state.isNow = false
-  }
-  state.days = getDays(state.nYear, state.nMonth)
-}
-
-export { sWeek, now, state }
-export { getPrev, getNext, getNow }
 </script>
 
 <style scoped>
